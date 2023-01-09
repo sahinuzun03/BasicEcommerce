@@ -30,7 +30,8 @@ namespace EcommerceApp.Application.Services.AdminService
 
             if(addEmployee.UploadPath != null)
             {
-                using var image = Image.Load(addManagerDTO.UploadPath.OpenReadStream());
+                var stream = addManagerDTO.UploadPath.OpenReadStream();
+                using var image = Image.Load(stream);
                 //Dosyayı yolunu okuduk
 
                 image.Mutate(x => x.Resize(600, 560));//Resim boyutu ayarladık
@@ -85,7 +86,7 @@ namespace EcommerceApp.Application.Services.AdminService
         }
 
         public async Task UpdateManager(UpdateManagerDTO updateManagerDTO)
-        {
+            {
             var model = await _employeeRepo.GetDefault(x => x.Id == updateManagerDTO.Id);
 
             model.Name = updateManagerDTO.Name;

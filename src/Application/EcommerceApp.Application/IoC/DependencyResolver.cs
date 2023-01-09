@@ -2,6 +2,7 @@
 using AutoMapper;
 using EcommerceApp.Application.AutoMapper;
 using EcommerceApp.Application.Services.AdminService;
+using EcommerceApp.Application.Services.LoginService;
 using EcommerceApp.Domain.Repositories;
 using EcommerceApp.Infrastructure.Repositories;
 using System;
@@ -23,6 +24,8 @@ namespace EcommerceApp.Application.IoC
 
             //Service ??
             builder.RegisterType<AdminService>().As<IAdminService>().InstancePerLifetimeScope();
+
+            builder.RegisterType<LoginService>().As<ILoginService>().InstancePerLifetimeScope();
 
 
             //AUTOMAPPER
