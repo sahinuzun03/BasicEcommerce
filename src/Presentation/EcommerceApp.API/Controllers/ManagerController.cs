@@ -52,9 +52,8 @@ namespace EcommerceApp.API.Controllers
 
 
         [HttpPost("PostManager")]
-        public async Task<ActionResult> CreateManager(IFormFile images, [FromBody] AddManagerDTO addManagerDTO)
+        public async Task<ActionResult> CreateManager([FromForm]AddManagerDTO addManagerDTO)
         {
-            addManagerDTO.UploadPath = images;
             if (ModelState.IsValid)
             {
                 try
@@ -67,9 +66,7 @@ namespace EcommerceApp.API.Controllers
                     return BadRequest();
                 }
             }
-
             return Ok(addManagerDTO);
         }
-
     }
 }
