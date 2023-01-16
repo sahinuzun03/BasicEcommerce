@@ -2,7 +2,7 @@
 using Autofac.Extensions.DependencyInjection;
 using EcommerceApp.Application.IoC;
 using EcommerceApp.Infrastructure.Context;
-using EcommerceApp.MVC.Models.SeedData;
+using EcommerceApp.MVC.Models.SeedDataModel;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 

@@ -24,31 +24,10 @@ namespace EcommerceApp.Application.Services.AdminService
             _employeeRepo = employeeRepo;
         }
 
-        public async Task CreateManager(AddManagerDTO addManagerDTO)
+        public async Task CreateManager(ApiAddManagerDTO apiAddManagerDTO)
         {
-            var addEmployee = _mapper.Map<Employee>(addManagerDTO);
-
-            if(addEmployee.UploadPath != null)
-            {
-                var stream = addManagerDTO.UploadPath.OpenReadStream();
-                using var image = Image.Load(stream);
-                //Dosyayı yolunu okuduk
-
-                image.Mutate(x => x.Resize(600, 560));//Resim boyutu ayarladık
-
-                Guid guid = Guid.NewGuid();
-                image.Save($"wwwroot/images/{guid}.jpg");
-
-                addEmployee.ImagePath = ($"/images/{guid}.jpg");
-                await _employeeRepo.Create(addEmployee);
-
-            }
-            else
-            {
-                addEmployee.ImagePath = ($"/images/default.jpeg");
-                await _employeeRepo.Create(addEmployee);
-            }
-            
+            var addEmployee = _mapper.Map<Employee>(apiAddManagerDTO);
+            await _employeeRepo.Create(addEmployee);
         }
 
         public async Task<List<ListOfManagerVM>> GetManagers()
@@ -116,6 +95,31 @@ namespace EcommerceApp.Application.Services.AdminService
             model.Status = Status.Passive;
 
             await _employeeRepo.Delete(model);
+        }
+
+        public ApiAddManagerDTO GetApiAddManagerDTO(AddManagerDTO addManagerDTO)
+        {
+            var apiAddManagerDTO = _mapper.Map<ApiAddManagerDTO>(addManagerDTO);
+            if (addManagerDTO.UploadPath != null)
+            {
+                var stream = addManagerDTO.UploadPath.OpenReadStream();
+                using var image = Image.Load(stream);
+                //Dosyayı yolunu okuduk
+
+                image.Mutate(x => x.Resize(600, 560));//Resim boyutu ayarladık
+
+                Guid guid = Guid.NewGuid();
+                image.Save($"wwwroot/images/{guid}.jpg");
+
+                apiAddManagerDTO.ImagePath = ($"/images/{guid}.jpg");
+
+            }
+            else
+            {
+                apiAddManagerDTO.ImagePath = ($"/images/default.jpeg");
+            }
+
+            return apiAddManagerDTO;
         }
     }
 }

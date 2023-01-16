@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using EcommerceApp.Domain.Entities;
 using EcommerceApp.Domain.Enums;
 
-namespace EcommerceApp.MVC.Models.SeedData
+namespace EcommerceApp.MVC.Models.SeedDataModel
 {
     public static class SeedData
     {

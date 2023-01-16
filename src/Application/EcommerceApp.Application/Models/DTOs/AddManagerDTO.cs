@@ -33,6 +33,6 @@ namespace EcommerceApp.Application.Models.DTOs
         public string? ImagePath { get; set; }
 
         [PictureFileExtension]
-        public IFormFile UploadPath { get; set; }
+        public IFormFile? UploadPath { get; set; }
     }
 }

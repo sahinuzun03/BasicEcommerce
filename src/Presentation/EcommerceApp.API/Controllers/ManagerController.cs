@@ -52,20 +52,15 @@ namespace EcommerceApp.API.Controllers
 
 
         [HttpPost("PostManager")]
-        public async Task<ActionResult> CreateManager(IFormFile images, [FromBody] AddManagerDTO addManagerDTO)
+        public async Task<ActionResult> CreateManager(ApiAddManagerDTO apiAddManagerDTO)
         {
             if (ModelState.IsValid)
             {
-                await _adminService.CreateManager(addManagerDTO);
-                return CreatedAtAction("GetManager", new { Id = addManagerDTO.Id }, addManagerDTO);
+                await _adminService.CreateManager(apiAddManagerDTO);
+                return Ok();
             }
 
-                catch (Exception)
-                {
-                    return BadRequest();
-                }
-            }
-            return Ok(addManagerDTO);
+            return BadRequest();
         }
     }
 }

@@ -3,6 +3,7 @@ using EcommerceApp.Application.Models.VMs;
 using EcommerceApp.Application.Services.AdminService;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Net.Http.Json;
 
 namespace EcommerceApp.MVC.Areas.Admin.Controllers
 {
@@ -25,20 +26,20 @@ namespace EcommerceApp.MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddManager(AddManagerDTO addManagerDTO)
+        public async Task<IActionResult> AddManager([FromForm]AddManagerDTO addManagerDTO)
         {
+
+            var ApiAddManagerDTO = _adminService.GetApiAddManagerDTO(addManagerDTO);
+            
             if (ModelState.IsValid)
             {
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri("https://localhost:7186/");
 
-                    var responseTask = client.PostAsJsonAsync<AddManagerDTO>("api/Manager", addManagerDTO);
+                    var httpResponseMessage = await client.PostAsJsonAsync<ApiAddManagerDTO>("api/Manager/PostManager", ApiAddManagerDTO);
 
-                    responseTask.Wait();
-                    var resulTask = responseTask.Result;
-
-                    if (responseTask.IsCompletedSuccessfully)
+                    if (httpResponseMessage.IsSuccessStatusCode)
                     {
                         return RedirectToAction(nameof(ListOfManagers));
                     }
