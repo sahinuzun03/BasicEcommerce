@@ -52,6 +52,8 @@ namespace EcommerceApp.MVC.Areas.Admin.Controllers
             {
                 return BadRequest();
             }
+
+            //push gözükmüyor o yüzden commit atıyorum
         }
 
         public async Task<IActionResult> ListOfManagers()
