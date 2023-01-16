@@ -8,7 +8,7 @@ using System.Net;
 
 namespace EcommerceApp.API.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ManagerController : ControllerBase
     {
@@ -52,14 +52,13 @@ namespace EcommerceApp.API.Controllers
 
 
         [HttpPost("PostManager")]
-        public async Task<ActionResult> CreateManager([FromForm]AddManagerDTO addManagerDTO)
+        public async Task<ActionResult> CreateManager(IFormFile images, [FromBody] AddManagerDTO addManagerDTO)
         {
             if (ModelState.IsValid)
             {
-                try
-                {
-                    await _adminService.CreateManager(addManagerDTO);
-                }
+                await _adminService.CreateManager(addManagerDTO);
+                return CreatedAtAction("GetManager", new { Id = addManagerDTO.Id }, addManagerDTO);
+            }
 
                 catch (Exception)
                 {
